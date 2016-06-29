@@ -22,7 +22,7 @@ var RED = (function() {
                 "Accept":"application/json"
             },
             cache: false,
-            url: 'nodes',
+            url: 'nodes.list.json',
             success: function(data) {
                 RED.nodes.setNodeList(data);
 
@@ -52,7 +52,7 @@ var RED = (function() {
                 "Accept":"text/html"
             },
             cache: false,
-            url: 'nodes',
+            url: 'nodes.config.html',
             success: function(data) {
                 $("body").append(data);
                 $("body").i18n();
@@ -72,9 +72,25 @@ var RED = (function() {
                 "Accept":"application/json"
             },
             cache: false,
-            url: 'flows',
+            crossDomain: true,
+            url: 'https://z09dcjh5b4.execute-api.us-east-1.amazonaws.com/v1/flow', //'flows',
             success: function(nodes) {
-                RED.nodes.import(nodes);
+                /**
+                  * Delete all null (or undefined) properties from an object.
+                  * Set 'recurse' to true if you also want to delete properties in nested objects.
+                  */
+                var clean = function delete_null_properties(test, recurse) {
+                    for (var i in test) {
+                        if (test[i] === null || test[i] === undefined || test[i] === '') {
+                            test[i] = '';
+                        } else if (recurse && typeof test[i] === 'object') {
+                            delete_null_properties(test[i], recurse);
+                        }
+                    }
+                    return test;
+                }                
+
+                RED.nodes.import(clean(nodes, true));
                 RED.nodes.dirty(false);
                 RED.view.redraw(true);
                 RED.comms.subscribe("status/#",function(topic,msg) {
@@ -223,7 +239,7 @@ var RED = (function() {
         RED.deploy.init(RED.settings.theme("deployButton",null));
 
         RED.keyboard.add("workspace", /* ? */ 191,{shift:true},function(){RED.keyboard.showHelp();d3.event.preventDefault();});
-        RED.comms.connect();
+        //RED.comms.connect();
 
         $("#main-container").show();
         $(".header-toolbar").show();

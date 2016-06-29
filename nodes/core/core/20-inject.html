@@ -508,7 +508,7 @@
                 if (this.payloadType === "none") { label = this._("inject.blank"); }
                 var node = this;
                 $.ajax({
-                    url: "inject/"+this.id,
+                    url: "https://z09dcjh5b4.execute-api.us-east-1.amazonaws.com/v1/nodes/inject/"+this.id,
                     type:"POST",
                     success: function(resp) {
                         RED.notify(node._("inject.success",{label:label}),"success");

@@ -224,8 +224,20 @@ RED.deploy = (function() {
                 }
             }
 
-
-
+            /**
+              * Delete all null (or undefined) properties from an object.
+              * Set 'recurse' to true if you also want to delete properties in nested objects.
+              */
+            var clean = function delete_null_properties(test, recurse) {
+                for (var i in test) {
+                    if (test[i] === null || test[i] === undefined || test[i] === '') {
+                        test[i] = null;
+                    } else if (recurse && typeof test[i] === 'object') {
+                        delete_null_properties(test[i], recurse);
+                    }
+                }
+                return test;
+            }
 
             var nns = RED.nodes.createCompleteNodeSet();
 
@@ -234,9 +246,10 @@ RED.deploy = (function() {
             RED.nodes.dirty(false);
 
             $.ajax({
-                url:"flows",
                 type: "POST",
-                data: JSON.stringify(nns),
+                crossDomain: true,
+                url: 'https://z09dcjh5b4.execute-api.us-east-1.amazonaws.com/v1/flow', //"flows",
+                data: JSON.stringify(clean(nns, true)),
                 contentType: "application/json; charset=utf-8",
                 headers: {
                     "Node-RED-Deployment-Type":deploymentType
