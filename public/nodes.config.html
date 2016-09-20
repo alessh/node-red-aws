@@ -6962,3 +6962,65 @@ msg.cookies = {
     <p>If <code>msg.params</code> exists and is an object of name:value pairs,
     this node will treat it as parameters for the update request.</p>
 </script>
+
+
+
+<script type="text/x-red" data-template-name="aws-ses-in">
+    <div class="form-row">
+        <label for="node-input-email"><i class="icon-envelope"></i> Email</label>
+        <input type="text" id="node-input-email">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="aws-ses-in">
+    <p>Type email address to use for correlate incomming messages.</p>
+</script>
+
+<script type="text/x-red" data-template-name="aws-ses-out">
+    <div class="form-row">
+        <label for="node-input-email"><i class="icon-envelope"></i> Email</label>
+        <input type="text" id="node-input-email">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="aws-ses-out">
+    <p>Type from email address to use for correlate outgoing messages.</p>
+    <p>TODO: other parameters like email from address, template for message body and file attachments.</p>
+</script>
+
+<script type="text/javascript">
+    RED.nodes.registerType('aws-ses-in', {
+        category: 'input',
+        color: '#c7e9c0',
+        defaults: {
+            email: {value: "", required: true}
+        },
+        inputs: 0,
+        outputs: 1,
+        icon: "envelope.png",
+        align: 'left',
+        paletteLabel: "aws-ses-in",
+        label: function () {
+            return (this.email || "aws-ses-in");
+        }
+    });
+</script>
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('aws-ses-out', {
+        category: 'output',
+        color: '#c7e9c0',
+        defaults: {
+            email: {value: "", required: true}
+        },
+        inputs: 1,
+        outputs: 0,
+        icon: "envelope.png",
+        align: 'right',
+        paletteLabel: "aws-ses-out",
+        label: function () {
+            return (this.email || "aws-ses-out");
+        }
+    });
+</script>
