@@ -6993,7 +6993,7 @@ msg.cookies = {
         category: 'input',
         color: '#c7e9c0',
         defaults: {
-            email: {value: "", required: true}
+            recipient: {value: "", required: true}
         },
         inputs: 0,
         outputs: 1,
@@ -7001,7 +7001,7 @@ msg.cookies = {
         align: 'left',
         paletteLabel: "aws-ses-in",
         label: function () {
-            return (this.email || "aws-ses-in");
+            return (this.recipient || "aws-ses-in");
         }
     });
 </script>
@@ -7012,7 +7012,7 @@ msg.cookies = {
         category: 'output',
         color: '#c7e9c0',
         defaults: {
-            email: {value: "", required: true}
+            recipient: {value: "", required: true}
         },
         inputs: 1,
         outputs: 0,
@@ -7020,7 +7020,7 @@ msg.cookies = {
         align: 'right',
         paletteLabel: "aws-ses-out",
         label: function () {
-            return (this.email || "aws-ses-out");
+            return (this.recipient || "aws-ses-out");
         }
     });
 </script>
